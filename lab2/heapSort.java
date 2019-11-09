@@ -123,7 +123,7 @@ class HeapSort {
 }
 
 
-public class Main {
+public class heapSort {
     public static void main(String[] args) throws IOException {
         int[] a = Utility.getArrayFromFile("input");
         HeapSort.heapSort(a);
