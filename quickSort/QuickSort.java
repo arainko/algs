@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class QuickSort {
 
     static void swap(int[] array, int indA, int indB) {
@@ -26,5 +28,39 @@ public class QuickSort {
             quickSort(array, border, partIndex);
             quickSort(array, partIndex +1, pivotIndex);
         }
+    }
+
+    static void betterQuickSort(int[] array, int border, int pivotIndex) {
+        int value = 4;
+
+        if (pivotIndex - border  + 1 < value) {
+            SubSort.subSort(array, border, pivotIndex);
+        } else if (border < pivotIndex) {
+            int partIndex = partition(array, border, pivotIndex);
+            betterQuickSort(array, border, partIndex);
+            betterQuickSort(array, partIndex +1, pivotIndex);
+        }
+    }
+
+    static int[] generateRandomizedArray(int length) {
+        int[] seq = new int[length];
+        Random generator = new Random();
+
+        for (int i = 0; i < length; i++)
+            seq[i] = generator.nextInt(10000) - 5000;
+
+        return seq;
+    }
+
+    static int[] generateDescendingArray(int length) {
+        int[] seq = new int[length];
+        int j = length;
+
+        for (int i = 0; i < length; i++) {
+            seq[i] = j;
+            j--;
+        }
+
+        return seq;
     }
 }
