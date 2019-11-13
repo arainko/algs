@@ -32,8 +32,8 @@ public class QuickSort {
         int value = 3;
 
         if (pivotIndex - border  + 1 < value) {
-//            Utilities.bubble(array, border, pivotIndex);
-            Utilities.subSort(array, border, pivotIndex);
+            Utilities.bubbleSort(array, border, pivotIndex);
+//            Utilities.subSort(array, border, pivotIndex);
         } else if (border < pivotIndex) {
             int partIndex = partition(array, border, pivotIndex);
             modifiedQuickSort(array, border, partIndex);

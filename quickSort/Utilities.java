@@ -22,9 +22,9 @@ public class Utilities {
 
     }
 
-    static void bubble(int[] array, int p, int r) {
-        for (int i = p; i <= r; i++)
-            for(int j = i + 1; j <= r; j++)
+    static void bubbleSort(int[] array, int from, int to) {
+        for (int i = from; i <= to; i++)
+            for(int j = i + 1; j <= to; j++)
                 if (array[i] > array[j])
                     swap(array, i, j);
     }
@@ -51,22 +51,24 @@ public class Utilities {
         return seq;
     }
 
-    static void testTimeNormal(int[] array) {
-        int last = array.length-1;
-
+    static long testTimeNormal(int[] array) {
+        int[] arr = array.clone();
+        int last = arr.length-1;
         long startTime = System.currentTimeMillis();
-            QuickSort.quickSort(array, 0, last);
+            QuickSort.quickSort(arr, 0, last);
         long endTime = System.currentTimeMillis();
-        System.out.println("Normal took " + (endTime - startTime) + " milliseconds");
+//        System.out.println("Normal took " + (endTime - startTime) + " milliseconds");
+        return endTime - startTime;
     }
 
-    static void testTimeModified(int[] array) {
-        int last = array.length-1;
-
+    static long testTimeModified(int[] array) {
+        int[] arr = array.clone();
+        int last = arr.length-1;
         long startTime = System.currentTimeMillis();
-        QuickSort.modifiedQuickSort(array, 0, last);
+            QuickSort.modifiedQuickSort(arr, 0, last);
         long endTime = System.currentTimeMillis();
-        System.out.println("Modified took " + (endTime - startTime) + " milliseconds");
+//        System.out.println("Modified took " + (endTime - startTime) + " milliseconds");
+        return endTime - startTime;
     }
 
     static boolean isOrdered(int[] seq) {
