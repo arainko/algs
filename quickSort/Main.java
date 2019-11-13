@@ -1,7 +1,7 @@
 public class Main {
     public static void main(String[] args) {
 
-        System.out.println("--- --- --- DANE LOSOWE --- --- ---");
+        System.out.println("--- DANE LOSOWE ---");
         System.out.println("ILOSC \t MOD \t NORMAL");
         for (int i = 50000; i <= 200000; i += 50000) {
             int[] array = Utilities.generateRandomizedArray(i);
