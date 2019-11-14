@@ -29,16 +29,19 @@ public class QuickSort {
     }
 
     static void modifiedQuickSort(int[] array, int border, int pivotIndex) {
-        int value = 3;
+        int value = 10;
 
-        if (pivotIndex - border  + 1 < value) {
-            Utilities.bubbleSort(array, border, pivotIndex);
-//            Utilities.subSort(array, border, pivotIndex);
-        } else if (border < pivotIndex) {
-            int partIndex = partition(array, border, pivotIndex);
-            modifiedQuickSort(array, border, partIndex);
-            modifiedQuickSort(array, partIndex +1, pivotIndex);
+        if (border < pivotIndex) {
+            if (pivotIndex - border  + 1 < value) {
+                Utilities.bubbleSort(array, border, pivotIndex);
+                //            Utilities.subSort(array, border, pivotIndex);
+            } else {
+                int partIndex = partition(array, border, pivotIndex);
+                modifiedQuickSort(array, border, partIndex);
+                modifiedQuickSort(array, partIndex +1, pivotIndex);
+            }
         }
+
     }
 
 }
