@@ -1,3 +1,5 @@
+package QuickSort;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -20,7 +22,7 @@ public class Main {
             int[] array = Utilities.generateAscendingArray(i);
             long averageTime1 = 0;
             long averageTime2 = 0;
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < 100; j++) {
                 averageTime1 += Utilities.testTimeModified(array);
                 averageTime2 += Utilities.testTimeNormal(array);
             }
