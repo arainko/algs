@@ -29,13 +29,6 @@ public class Utilities {
         return outputMaxLength;
     }
 
-    static int getNumberOfDifferentChars(String[] normalizedArr, int index) {
-        Set<Character> charSet = new HashSet<>();
-        for (String str : normalizedArr) {
-            charSet.add(str.charAt(index));
-        }
-        return charSet.size();
-    }
 
     static int getUpperLimit(String[] normalizedArr, int index) {
         int localMax = normalizedArr[0].charAt(index);

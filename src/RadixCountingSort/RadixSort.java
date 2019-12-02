@@ -23,9 +23,6 @@ public class RadixSort {
             countsArray[charIndex]--;
         }
 
-//        for (String str : outputArray)
-//            System.out.println(str);
-
         return outputArray;
     }
 
