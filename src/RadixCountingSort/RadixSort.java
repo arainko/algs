@@ -23,10 +23,19 @@ public class RadixSort {
             countsArray[charIndex]--;
         }
 
-        for (String str : outputArray)
-            System.out.println(str);
+//        for (String str : outputArray)
+//            System.out.println(str);
 
         return outputArray;
+    }
+
+    static String[] radixSort(String[] inputArray) {
+        String[] outputArr = inputArray.clone();
+        int maxLength = Utilities.findMaxLength(inputArray)-1;
+        for (int i=maxLength; i >= 0; i--) {
+            outputArr = countingSort(outputArr, i);
+        }
+        return outputArr;
     }
 
 

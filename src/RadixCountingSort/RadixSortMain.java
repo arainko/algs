@@ -9,6 +9,7 @@ public class RadixSortMain {
         int lower = Utilities.getLowerLimit(normalizedWord, 0);
 //        System.out.println(lower);
 
-        RadixSort.countingSort(words, 1);
+              for (String str : RadixSort.radixSort(words))
+                    System.out.println(str);
     }
 }
