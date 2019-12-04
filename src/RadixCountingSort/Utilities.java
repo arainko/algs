@@ -1,6 +1,11 @@
 package RadixCountingSort;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Utilities {
@@ -46,6 +51,32 @@ public class Utilities {
                 localMin = str.charAt(index);
         }
         return localMin;
+    }
+
+    static String[] getArrayFromFile(String filePath) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            List<String> content = new ArrayList<>();
+
+            while ((line = reader.readLine()) != null) {
+                if (!line.equals(""))
+                    content.add(line);
+            }
+
+            String[] output = new String[content.size()];
+
+            for (int i = 0; i < content.size(); i++) {
+                output[i] = content.get(i);
+            }
+            return output;
+        }
+    }
+
+    static String[] getSurnamesOnly(String[] surnames) {
+        String[] output = new String[surnames.length];
+        for (int i = 0; i < surnames.length; i++)
+            output[i] = surnames[i].split(" ")[1];
+        return output;
     }
 
 
