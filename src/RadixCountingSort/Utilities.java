@@ -1,8 +1,6 @@
 package RadixCountingSort;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -72,11 +70,42 @@ public class Utilities {
         }
     }
 
+    static void writeArrayToFile(String[] array, String filePath) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+
+        for (String line : array) {
+            printWriter.print(line + "\n");
+        }
+        printWriter.close();
+    }
+
     static String[] getSurnamesOnly(String[] surnames) {
         String[] output = new String[surnames.length];
         for (int i = 0; i < surnames.length; i++)
             output[i] = surnames[i].split(" ")[1];
         return output;
+    }
+
+    static String[] concatenateSurnamesAndNumbers(String[] originalArray, String[] sortedSurnames) {
+        String[] trimmedSurnames = new String[sortedSurnames.length];
+        String[] outputArray = new String[originalArray.length];
+
+        for (int i=0; i < sortedSurnames.length; i++) {
+            trimmedSurnames[i] = sortedSurnames[i].trim();
+        }
+
+        for (int i=0; i < trimmedSurnames.length; i++) {
+            String currSortedSurname = trimmedSurnames[i];
+            for (int j=0; j < trimmedSurnames.length; j++) {
+                String currOriginalNumberAndSurname = originalArray[j];
+                String currOriginalSurname = originalArray[j].split(" ")[1];
+                if (currSortedSurname.equals(currOriginalSurname)) {
+                    outputArray[i] = currOriginalNumberAndSurname;
+                }
+            }
+        }
+        return outputArray;
     }
 
 

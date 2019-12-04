@@ -8,12 +8,21 @@ public class RadixSortMain {
                 .getArrayFromFile("/home/aleksander/IdeaProjects/algs/src/RadixCountingSort/surnames");
         String[] surnamesOnly = Utilities.getSurnamesOnly(surnames);
 
-        long start = System.currentTimeMillis();
-        String[] sortedSurnamesDirty = RadixSort.radixSort(surnamesOnly);
-        long end = System.currentTimeMillis();
-        System.out.println(end-start);
+        long startRadix = System.currentTimeMillis();
+        String[] sortedSurnames = RadixSort.radixSort(surnamesOnly);
+        long endRadix = System.currentTimeMillis();
 
-//        for (String str : RadixSort.radixSort(Utilities.getSurnamesOnly(surnames)))
+        long startQuick = System.currentTimeMillis();
+        QuickSortForStrings.quickSort(surnamesOnly, 0, surnames.length-1);
+        long endQuick = System.currentTimeMillis();
+
+        System.out.println("Radix took " + (endRadix-startRadix) + "ms.");
+        System.out.println("Quick took " + (endQuick-startQuick) + "ms.");
+
+        String[] sortedWhole = Utilities.concatenateSurnamesAndNumbers(surnames, sortedSurnames);
+        Utilities.writeArrayToFile(sortedWhole, "/home/aleksander/IdeaProjects/algs/src/RadixCountingSort/sortedBySurname");
+
+//        for (String str : surnamesOnly)
 //            System.out.println(str);
     }
 }
