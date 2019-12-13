@@ -22,7 +22,7 @@ public class RadixSortMain {
         String[] sortedWhole = Utilities.concatenateSurnamesAndNumbers(surnames, sortedSurnames);
         Utilities.writeArrayToFile(sortedWhole, "/home/aleksander/IdeaProjects/algs/src/RadixCountingSort/sortedBySurname");
 
-//        for (String str : surnamesOnly)
-//            System.out.println(str);
+        for (String str : sortedSurnames)
+            System.out.println(str);
     }
 }
