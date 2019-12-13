@@ -13,5 +13,6 @@ class Node {
 
     public String toString() {
         return this.content;
+
     }
 }
