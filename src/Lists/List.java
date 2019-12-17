@@ -73,23 +73,34 @@ public class List {
     }
 
     public List merge(List that) {
+        this.warden.prev.next = that.head;
+        that.warden.prev.next = this.warden;
+        that.head = that.warden;
 
+        return this;
     }
 
     public static void main(String[] args) {
         Node node1 = new Node("node1");
-        Node node12 = new Node("node1");
         Node node2 = new Node("node2");
         Node node3 = new Node("node3");
-        Node node4 = new Node("node4");
-        Node node5 = new Node("node4");
+        Node node11 = new Node("node11");
+        Node node12 = new Node("node12");
+        Node node13 = new Node("node13");
+
         List list = new List();
+        List list2 = new List();
+
         list.insert(node1);
         list.insert(node2);
         list.insert(node3);
-        list.insert(node4);
-        list.insert(node5);
+
+        list.insert(node11);
         list.insert(node12);
-        list.distinct().print();
+        list.insert(node13);
+
+        List mergedList = list.merge(list2);
+
+        mergedList.print();
     }
 }

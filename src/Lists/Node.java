@@ -16,6 +16,8 @@ class Node {
     }
 
     public String toString() {
+        if (content == null)
+            return "";
         return this.content;
 
     }
