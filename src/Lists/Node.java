@@ -11,6 +11,10 @@ class Node {
         this.prev = null;
     }
 
+    public Node copy() {
+        return new Node(content);
+    }
+
     public String toString() {
         return this.content;
 

@@ -51,17 +51,45 @@ public class List {
         }
     }
 
+    public void clear() {
+        Node currNode = this.head;
+        while (currNode != this.warden) {
+            currNode = currNode.next;
+           delete(currNode.prev.content);
+        }
+    }
+
+    public List distinct() {
+        List distinctList = new List();
+        distinctList.insert(head.copy());
+        Node currNode = this.head;
+        while (currNode != this.warden) {
+            if (distinctList.search(currNode.content) == null) {
+                distinctList.insert(currNode.copy());
+            }
+            currNode = currNode.next;
+        }
+        return distinctList;
+    }
+
+    public List merge(List that) {
+
+    }
+
     public static void main(String[] args) {
         Node node1 = new Node("node1");
+        Node node12 = new Node("node1");
         Node node2 = new Node("node2");
         Node node3 = new Node("node3");
         Node node4 = new Node("node4");
+        Node node5 = new Node("node4");
         List list = new List();
         list.insert(node1);
         list.insert(node2);
         list.insert(node3);
         list.insert(node4);
-        list.delete("node4");
-        list.print();
+        list.insert(node5);
+        list.insert(node12);
+        list.distinct().print();
     }
 }
