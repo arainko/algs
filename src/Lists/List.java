@@ -2,7 +2,7 @@ package Lists;
 
 public class List {
     public Node head;
-    public Node warden = new Node((String)null);
+    public Node warden = new Node(null);
 
     public List() {
         this.warden.next = this.warden;
@@ -19,34 +19,36 @@ public class List {
     }
 
     public void print() {
-        for(Node currNode = this.head; currNode != this.warden; currNode = currNode.next) {
+        Node currNode = this.head;
+        while (currNode != this.warden) {
             System.out.println(currNode);
+            currNode = currNode.next;
         }
-
     }
 
     public Node search(String nodeContent) {
-        for(Node currNode = this.head; currNode != this.warden; currNode = currNode.next) {
+        Node currNode = this.head;
+        while (currNode != this.warden) {
             if (currNode.content.equals(nodeContent)) {
                 return currNode;
             }
+            currNode = currNode.next;
         }
-
         return null;
     }
 
     public void delete(String nodeContent) {
-        for(Node currNode = this.head; currNode != this.warden; currNode = currNode.next) {
+        Node currNode = head;
+        while (currNode != warden) {
             if (currNode.content.equals(nodeContent)) {
-                if (currNode == this.head && currNode.next == this.warden) {
-                    this.head = currNode.next;
+                if (currNode == head && currNode.next == warden || currNode.prev == warden && currNode == head) {
+                    head = currNode.next;
                 }
-
                 currNode.prev.next = currNode.next;
                 currNode.next.prev = currNode.prev;
             }
+            currNode = currNode.next;
         }
-
     }
 
     public static void main(String[] args) {
@@ -55,12 +57,11 @@ public class List {
         Node node3 = new Node("node3");
         Node node4 = new Node("node4");
         List list = new List();
-        List list2 = new List();
         list.insert(node1);
         list.insert(node2);
         list.insert(node3);
-        list2.insert(node4);
-        list2.delete("node4");
-        list2.print();
+        list.insert(node4);
+        list.delete("node4");
+        list.print();
     }
 }

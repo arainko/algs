@@ -281,7 +281,8 @@
 565 Baczkowski
 2459 Baczyk
 722 Baczynski
-722 Baczynski
+722 Baczynski/        String[] sortedWhole = Utilities.concatenateSurnamesAndNumbers(surnames, sortedSurnames);
+//        Utilities.writeArrayToFile(sortedWhole
 416 Badach
 377 Badaczewski
 327 Badecki
