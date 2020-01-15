@@ -35,7 +35,7 @@ fun main() {
     val surnameRecords = File("src/com/arainko/hash/surnames.txt").readLines()
             .map { Record(it.split(" ")[0].toInt(), it.split(" ")[1]) }
 
-    val testArr: Array<Record> = Array(10) { Record(0, "empty") }
+    val testArr: Array<Record> = Array(5) { Record(0, "empty") }
 
     val try1 = insertAndGetTries(surnameRecords[0], testArr)
     val try2 = insertAndGetTries(surnameRecords[1], testArr)
@@ -47,15 +47,18 @@ fun main() {
     println(try2)
     println(try3)
 
-    val percent50Array: Array<Record> = Array(40000) { Record(0, "empty") }
-    val percent70Array: Array<Record> = Array(28600) { Record(0, "empty") }
-    val percent90Array: Array<Record> = Array(22300) { Record(0, "empty") }
+    val fewerSurnames = surnameRecords.take(4000)
+
+    val percent50Array: Array<Record> = Array(8000) { Record(0, "empty") }
+    val percent70Array: Array<Record> = Array(5720) { Record(0, "empty") }
+    val percent90Array: Array<Record> = Array(4460) { Record(0, "empty") }
 
     val tries50: ArrayList<Long> = ArrayList()
     val tries70: ArrayList<Long> = ArrayList()
     val tries90: ArrayList<Long> = ArrayList()
 
-    surnameRecords.forEach {
+
+    fewerSurnames.forEach {
         tries50.add(insertAndGetTries(it, percent50Array))
         tries70.add(insertAndGetTries(it, percent70Array))
         tries90.add(insertAndGetTries(it, percent90Array))
@@ -69,5 +72,10 @@ fun main() {
     println("70%: $avg70")
     println("90%: $avg90")
 
+//    println(hash(34,34,13))
+//    println(hash(34,34,13))
+//    percent50Array.forEach { println(it) }
+//    println(surnameRecords[4].surname.convertToNumber())
+//    println()
 
 }
