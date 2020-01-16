@@ -53,17 +53,37 @@ class Tree {
         root?.let { printTree(it, 1) }
     }
 
-    fun delete(content: Int): Unit {
+   fun delete(key: Int) {
+       fun delete(parent: TreeNode?, key: Int): TreeNode? {
+           val deletedNode: TreeNode?
 
-    }
+           if (parent == null)
+               return parent
+
+           if (key < parent.content)
+               parent.left = delete(parent.left, key)
+           else if (key > parent.content)
+               parent.right = delete(parent.right, key)
+           else {
+               if (parent.left == null) return parent.right
+               else if (parent.right == null) return parent.left
+
+               deletedNode = findOutermostLeft(parent.right!!)
+               parent.content = deletedNode!!.content
+               parent.right = delete(parent.right, deletedNode.content)
+           }
+           return parent
+       }
+       delete(root, key)
+   }
+
 
 //        if (node?.left == null && node?.right == null
 
-    fun findOutermostLeft(content: Int): TreeNode? {
-        val node = search(content)
+    fun findOutermostLeft(node: TreeNode): TreeNode? {
         tailrec fun findOutermostLeft(currVisited: TreeNode): TreeNode =
                 if (currVisited.left == null) currVisited else findOutermostLeft(currVisited.left!!)
-        return node?.let { findOutermostLeft(it) }
+        return findOutermostLeft(node)
     }
 
 }
@@ -75,8 +95,8 @@ fun main() {
     leafs.forEach {  tree.insert(TreeNode(it))  }
 
 //    tree.printTree()
-
-    tree.delete(11)
+    val nodeToDelete = tree.search(11)
+    tree.delete(18)
     tree.printTree()
 
 }

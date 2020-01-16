@@ -1,6 +1,6 @@
 package com.arainko.trees
 
-class TreeNode(val content: Int): Comparable<TreeNode> {
+class TreeNode(var content: Int): Comparable<TreeNode> {
     var left: TreeNode? = null
     var right: TreeNode? = null
     var switch: Switch = Switch.L
