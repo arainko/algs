@@ -41,40 +41,40 @@ class Tree {
     }
 
     fun printTree() {
-        fun printTree(visited: TreeNode, level: Int): Unit  {
+        fun innerPrintTree(visited: TreeNode, level: Int): Unit  {
             if (visited.left == null && visited.right == null) {
                 print("")
             } else {
                 println("$visited LEVEL: $level")
-                visited.left?.let { printTree(it, level + 1) }
-                visited.right?.let { printTree(it, level +1) }
+                visited.left?.let { innerPrintTree(it, level + 1) }
+                visited.right?.let { innerPrintTree(it, level +1) }
             }
         }
-        root?.let { printTree(it, 1) }
+        root?.let { innerPrintTree(it, 1) }
     }
 
    fun delete(key: Int) {
-       fun delete(parent: TreeNode?, key: Int): TreeNode? {
+       fun innerDelete(parent: TreeNode?, content: Int): TreeNode? {
            val deletedNode: TreeNode?
 
            if (parent == null)
                return parent
 
-           if (key < parent.content)
-               parent.left = delete(parent.left, key)
-           else if (key > parent.content)
-               parent.right = delete(parent.right, key)
+           if (content < parent.content)
+               parent.left = innerDelete(parent.left, content)
+           else if (content > parent.content)
+               parent.right = innerDelete(parent.right, content)
            else {
                if (parent.left == null) return parent.right
                else if (parent.right == null) return parent.left
 
                deletedNode = findOutermostLeft(parent.right!!)
                parent.content = deletedNode!!.content
-               parent.right = delete(parent.right, deletedNode.content)
+               parent.right = innerDelete(parent.right, deletedNode.content)
            }
            return parent
        }
-       delete(root, key)
+       innerDelete(root, key)
    }
 
 
@@ -89,14 +89,16 @@ class Tree {
 }
 
 fun main() {
-
-    val leafs = arrayOf(18, 11, 6, 30, 21, 19, 8, 22, 23, 5, 20, 26, 17)
+    val leafs = arrayOf(18, 18, 18, 30, 21, 19, 8, 22, 23, 5, 20, 26, 17)
     val tree = Tree()
     leafs.forEach {  tree.insert(TreeNode(it))  }
-
-//    tree.printTree()
-    val nodeToDelete = tree.search(11)
+    println("Drzewo z powtorzonymi elementami:")
+    tree.printTree()
+    println("Szukanie node'a z contentem 20:")
+    println(tree.search(20))
+    println("Drzewo po usunieciu trzech duplikatow:")
+    tree.delete(18)
+    tree.delete(18)
     tree.delete(18)
     tree.printTree()
-
 }
