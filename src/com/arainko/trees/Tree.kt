@@ -60,17 +60,17 @@ class Tree {
            if (parent == null)
                return parent
 
-           if (content < parent.content)
-               parent.left = innerDelete(parent.left, content)
-           else if (content > parent.content)
-               parent.right = innerDelete(parent.right, content)
-           else {
-               if (parent.left == null) return parent.right
-               else if (parent.right == null) return parent.left
+           when {
+               content < parent.content -> parent.left = innerDelete(parent.left, content)
+               content > parent.content -> parent.right = innerDelete(parent.right, content)
+               else -> {
+                   if (parent.left == null) return parent.right
+                   else if (parent.right == null) return parent.left
 
-               deletedNode = findOutermostLeft(parent.right!!)
-               parent.content = deletedNode!!.content
-               parent.right = innerDelete(parent.right, deletedNode.content)
+                   deletedNode = findOutermostLeft(parent.right!!)
+                   parent.content = deletedNode!!.content
+                   parent.right = innerDelete(parent.right, deletedNode.content)
+               }
            }
            return parent
        }
@@ -78,9 +78,7 @@ class Tree {
    }
 
 
-//        if (node?.left == null && node?.right == null
-
-    fun findOutermostLeft(node: TreeNode): TreeNode? {
+    private fun findOutermostLeft(node: TreeNode): TreeNode? {
         tailrec fun findOutermostLeft(currVisited: TreeNode): TreeNode =
                 if (currVisited.left == null) currVisited else findOutermostLeft(currVisited.left!!)
         return findOutermostLeft(node)
@@ -90,6 +88,8 @@ class Tree {
 
 fun main() {
     val leafs = arrayOf(18, 18, 18, 30, 21, 19, 8, 22, 23, 5, 20, 26, 17)
+//    val leafs = arrayOf(30, 40, 44, 42, 46, 35, 36, 4, 3)
+//    val leafs = arrayOf(18,11,6,30,21,19,8,22,23,5,20,26,17)
     val tree = Tree()
     leafs.forEach {  tree.insert(TreeNode(it))  }
     println("Drzewo z powtorzonymi elementami:")
