@@ -1,8 +1,7 @@
 package com.arainko.redblacktrees
 
 
-import com.arainko.redblacktrees.helpers.TreeNode
-import com.arainko.redblacktrees.helpers.TreeNode.*
+import com.arainko.redblacktrees.TreeNode.*
 
 class RedBlackTree {
 
@@ -23,6 +22,55 @@ class RedBlackTree {
         if (root is Empty) root = node else insert(root as Node, node as Node)
     }
 
+    fun rotateLeft(x: TreeNode) {
+        val y = x.right
+        x.right = y.left
+
+        if (y.left is Node)
+            y.left.parent = x
+
+        y.parent = x.parent
+        when {
+            x.parent is Empty -> root = y
+            x == x.parent.left -> x.parent.left = y
+            else -> x.parent.right = y
+        }
+        y.left = x
+        x.parent = y
+    }
+
+    fun rotateRight(x: TreeNode) {
+        val y = x.left
+        x.left = y.right
+
+        if (y.right is Node)
+            y.right.parent = x
+
+        y.parent = x.parent
+        when {
+            x.parent is Empty -> root = y
+            x == x.parent.right -> x.parent.right = y
+            else -> x.parent.left = y
+        }
+        y.right = x
+        x.parent = y
+    }
+
+    fun rbInsert(x: TreeNode) {
+        bstInsert(x)
+        x.color = Color.RED
+        while (x != root && x.parent.color == Color.RED) {
+            if (x.parent == x.parent.parent.left) {
+                val y = x.parent.parent.right
+                if (y.color == Color.RED) {
+                    x.parent.color = Color.BLACK
+                    y.color = Color.BLACK
+                    x.parent.parent.color = Color.RED
+                    x = x.parent.parent
+                }
+            }
+        }
+    }
 }
 
 fun main() {
