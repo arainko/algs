@@ -22,68 +22,28 @@ class RedBlackTree {
         if (root is Empty) root = node else insert(root as Node, node as Node)
     }
 
-    fun rotateLeft(x: TreeNode) {
-        val y = x.right
-        x.right = y.left
+    fun rotateLeft(rotationPoint: TreeNode): Unit = TODO()
+    fun rotateRight(rotationPoint: TreeNode): Unit = TODO()
+    fun rbInsert(node: TreeNode): Unit = TODO()
 
-        if (y.left is Node)
-            y.left.parent = x
-
-        y.parent = x.parent
-        when {
-            x.parent is Empty -> root = y
-            x == x.parent.left -> x.parent.left = y
-            else -> x.parent.right = y
-        }
-        y.left = x
-        x.parent = y
-    }
-
-    fun rotateRight(x: TreeNode) {
-        val y = x.left
-        x.left = y.right
-
-        if (y.right is Node)
-            y.right.parent = x
-
-        y.parent = x.parent
-        when {
-            x.parent is Empty -> root = y
-            x == x.parent.right -> x.parent.right = y
-            else -> x.parent.left = y
-        }
-        y.right = x
-        x.parent = y
-    }
-
-    fun rbInsert(x: TreeNode) {
-        bstInsert(x)
-        x.color = Color.RED
-        while (x != root && x.parent.color == Color.RED) {
-            if (x.parent == x.parent.parent.left) {
-                val y = x.parent.parent.right
-                if (y.color == Color.RED) {
-                    x.parent.color = Color.BLACK
-                    y.color = Color.BLACK
-                    x.parent.parent.color = Color.RED
-                    x = x.parent.parent
-                }
+    fun printTree() {
+        fun innerPrintTree(visited: TreeNode, level: Int): Unit {
+            if (visited.left is Empty && visited.right is Empty) {
+                print("")
+            } else {
+                println("$visited LEVEL: $level")
+                if (visited.left !is Empty) innerPrintTree(visited.left, level + 1)
+                if (visited.right !is Empty) innerPrintTree(visited.right, level + 1)
             }
         }
+        if (root !is Empty) innerPrintTree(root, 1)
     }
 }
 
+
 fun main() {
     val tree = RedBlackTree()
-    val node1 = Node(1)
-    val node2 = Node(2)
-    val node3 = Node(0)
-    tree.bstInsert(node1)
-    tree.bstInsert(node2)
-    tree.bstInsert(node3)
-
-    println(tree.root)
-    println(tree.root.right)
-    println(tree.root.left)
-    println(tree.root.left.parent)
+    val exampleNodes = arrayListOf(38, 31, 22, 8, 20, 5, 10, 9, 21, 27, 29, 25, 28)
+    exampleNodes.take(3).forEach { tree.bstInsert(Node(it)) }
+    tree.printTree()
 }
