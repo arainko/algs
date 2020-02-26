@@ -32,18 +32,18 @@ class RedBlackTree {
                 print("")
             } else {
                 println("$visited LEVEL: $level")
-                if (visited.left !is Empty) innerPrintTree(visited.left, level + 1)
-                if (visited.right !is Empty) innerPrintTree(visited.right, level + 1)
+                if (visited.left is Node) innerPrintTree(visited.left, level + 1)
+                if (visited.right is Node) innerPrintTree(visited.right, level + 1)
             }
         }
-        if (root !is Empty) innerPrintTree(root, 1)
+        if (root is Node) innerPrintTree(root, 1)
     }
 }
 
 
 fun main() {
     val tree = RedBlackTree()
-    val exampleNodes = arrayListOf(38, 31, 22, 8, 20, 5, 10, 9, 21, 27, 29, 25, 28)
+    val exampleNodes = arrayListOf(38, 31, 40, 8, 20, 5, 10, 9, 21, 27, 29, 25, 28)
     exampleNodes.take(3).forEach { tree.bstInsert(Node(it)) }
     tree.printTree()
 }

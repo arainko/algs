@@ -7,13 +7,19 @@ sealed class TreeNode {
     var left: TreeNode = Empty
     var right: TreeNode = Empty
     var color: Color = Color.BLACK
-    
-    class Node(val key: Int) : TreeNode(), Comparable<Node> {
-        override fun compareTo(other: Node): Int = this.key - other.key
-        override fun toString(): String = "TA"
+
+    override fun toString(): String = when (this) {
+        is Empty -> "EMPTY"
+        is Node -> {
+            val leftString = if (left is Node) "${(left as Node).key}" else "EMPTY"
+            val rightString = if (right is Node) "${(right as Node).key}" else "EMPTY"
+            "$leftString <- ${this.key} -> $rightString"
+        }
     }
 
-    object Empty : TreeNode() {
-        override fun toString(): String = "EMPTY"
+    class Node(val key: Int) : TreeNode(), Comparable<Node> {
+        override fun compareTo(other: Node): Int = this.key - other.key
     }
+
+    object Empty : TreeNode()
 }
