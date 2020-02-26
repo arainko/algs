@@ -11,11 +11,20 @@ sealed class TreeNode {
     override fun toString(): String = when (this) {
         is Empty -> "EMPTY"
         is Node -> {
-            val leftString = if (left is Node) "${(left as Node).key}" else "EMPTY"
-            val rightString = if (right is Node) "${(right as Node).key}" else "EMPTY"
+            val leftString = stringify(this.left)
+            val rightString = stringify(this.right)
             "$leftString <- ${this.key} -> $rightString"
         }
     }
+
+    operator fun component1(): TreeNode = parent
+    operator fun component2(): TreeNode = left
+    operator fun component3(): TreeNode = right
+    operator fun component4(): Color = color
+
+
+    private fun stringify(node: TreeNode): String =
+            if (node is Node) "${node.key} (${node.color})" else "EMPTY"
 
     class Node(val key: Int) : TreeNode(), Comparable<Node> {
         override fun compareTo(other: Node): Int = this.key - other.key
