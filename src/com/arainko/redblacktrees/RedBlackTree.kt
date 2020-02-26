@@ -22,7 +22,9 @@ class RedBlackTree {
         if (root is Empty) root = node else insert(root as Node, node as Node)
     }
 
-    fun rotateLeft(rotationPoint: TreeNode): Unit = TODO()
+    fun rotateLeft(rotationPoint: TreeNode): Unit {
+
+    }
     fun rotateRight(rotationPoint: TreeNode): Unit = TODO()
     fun rbInsert(node: TreeNode): Unit = TODO()
 
