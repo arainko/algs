@@ -51,13 +51,9 @@ class RedBlackTree {
             ogLeftChild.right.parent = rotationPoint
 
         ogLeftChild.parent = rotationPoint.parent
-        when {
-            rotationPoint.parent is Empty ->
-                root = ogLeftChild // rotation point is ROOT
-            rotationPoint == rotationPoint.parent.right ->
-                rotationPoint.parent.right = ogLeftChild // rotation point is a right child
-            else -> rotationPoint.parent.left = ogLeftChild // rotation point is a left child
-        }
+        if (rotationPoint.parent is Empty) root = ogLeftChild // rotation point is ROOT
+        else if (rotationPoint == rotationPoint.parent.right) rotationPoint.parent.right = ogLeftChild // rotation point is a right child
+        else rotationPoint.parent.left = ogLeftChild // rotation point is a left child
         ogLeftChild.right = rotationPoint
         rotationPoint.parent = ogLeftChild
     }

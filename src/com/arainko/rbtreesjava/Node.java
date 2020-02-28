@@ -14,6 +14,15 @@ public class Node {
 
     @Override
     public String toString() {
-        return this.key + "";
+        String leftString;
+        String rightString;
+
+        if (left == null) leftString = "LEAF";
+            else leftString = left.key + "";
+
+        if (right == null) rightString = "LEAF";
+            else rightString = right.key + "";
+
+        return "(" + leftString + ")" + " <- " + this.key + " -> " + "(" + rightString + ")";
     }
 }
