@@ -64,16 +64,16 @@ class RedBlackTree {
 
 
 
-    fun rbInsert(node: TreeNode): Unit {
-        while (node != root && node.parent.color == Color.RED) {
-            if (node.parent == node.parent.parent.left) {
-                val y = node.parent.parent.right
-                if (y.color == Color.RED) {
-                    node = node.parent.parent
-                }
-            }
-        }
-    }
+//    fun rbInsert(node: TreeNode): Unit {
+//        while (node != root && node.parent.color == Color.RED) {
+//            if (node.parent == node.parent.parent.left) {
+//                val y = node.parent.parent.right
+//                if (y.color == Color.RED) {
+//                    node = node.parent.parent
+//                }
+//            }
+//        }
+//    }
 
     fun printTree() {
         fun innerPrintTree(visited: TreeNode, level: Int): Unit {
