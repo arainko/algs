@@ -15,7 +15,6 @@ public class RedBlackTree {
     }
 
     void bstInsert(Node node) {
-
         node.left = warden;
         node.right = warden;
         node.color = Color.RED;
@@ -25,137 +24,121 @@ public class RedBlackTree {
 
         while (current != warden) {
             currentParent = current;
-            if (node.key < current.key)
-                current = current.left;
-            else
-                current = current.right;
+            if (node.key < current.key) current = current.left;
+            else current = current.right;
         }
 
         node.parent = currentParent;
 
-        if (currentParent == null)
-            root = node;
-        else if (node.key < currentParent.key)
-            currentParent.left = node;
+        if (currentParent == null) root = node;
+        else if (node.key < currentParent.key) currentParent.left = node;
         else currentParent.right = node;
     }
 
-    void rotateLeft(Node x) {
-        Node y = x.right;
-        x.right = y.left;
-        if (y.left != warden) {
-            y.left.parent = x;
-        }
-        y.parent = x.parent;
-        if (x.parent == null) {
-            this.root = y;
-        } else if (x == x.parent.left) {
-            x.parent.left = y;
-        } else {
-            x.parent.right = y;
-        }
-        y.left = x;
-        x.parent = y;
+    void rotateLeft(Node rotationPoint) {
+        Node y = rotationPoint.right;
+        rotationPoint.right = y.left;
+
+        if (y.left != warden) y.left.parent = rotationPoint;
+
+        y.parent = rotationPoint.parent;
+
+        if (rotationPoint.parent == null) this.root = y;
+        else if (rotationPoint == rotationPoint.parent.left) rotationPoint.parent.left = y;
+        else rotationPoint.parent.right = y;
+
+        y.left = rotationPoint;
+        rotationPoint.parent = y;
     }
 
-    void rotateRight(Node x) {
-        Node y = x.left;
-        x.left = y.right;
-        if (y.right != warden) {
-            y.right.parent = x;
-        }
-        y.parent = x.parent;
-        if (x.parent == null) {
-            this.root = y;
-        } else if (x == x.parent.right) {
-            x.parent.right = y;
-        } else {
-            x.parent.left = y;
-        }
-        y.right = x;
-        x.parent = y;
+    void rotateRight(Node rotationPoint) {
+        Node y = rotationPoint.left;
+        rotationPoint.left = y.right;
+
+        if (y.right != warden) y.right.parent = rotationPoint;
+
+        y.parent = rotationPoint.parent;
+
+        if (rotationPoint.parent == null) this.root = y;
+        else if (rotationPoint == rotationPoint.parent.right) rotationPoint.parent.right = y;
+        else rotationPoint.parent.left = y;
+
+        y.right = rotationPoint;
+        rotationPoint.parent = y;
     }
 
-//    void rbInsert(Node x) {
-//        bstInsert(x);
-//        Node y;
-//        while (x != root && x.parent.color == Color.RED) {
-//            if (x.parent == x.parent.parent.left) {
-//                y = x.parent.parent.right;
-//                if (y.color == Color.RED) {
-//                    x.parent.color = Color.BLACK;
-//                    y.color = Color.BLACK;
-//                    x.parent.parent.color = Color.RED;
-//                    x = x.parent.parent;
-//                } else if (x == x.parent.right) {
-//                    x = x.parent;
-//                    rotateLeft(x);
-//                } else {
-//                    x.parent.color = Color.BLACK;
-//                    x.parent.parent.color = Color.RED;
-//                    rotateRight(x.parent.parent);
-//                }
-//            } else {
-//                y = x.parent.left;
-//                if (y.color == Color.RED) {
-//                    x.parent.color = Color.BLACK;
-//                    y.color = Color.BLACK;
-//                    x.parent.parent.color = Color.RED;
-//                    x = x.parent.parent;
-//                } else if (x == x.parent.left) {
-//                    x = x.parent;
-//                    rotateRight(x);
-//                } else {
-//                    x.parent.color = Color.BLACK;
-//                    x.parent.parent.color = Color.RED;
-//                    rotateLeft(x.parent.parent);
-//                }
-//            }
-//        }
-//        root.color = Color.BLACK;
-//    }
+    public void rbInsert(Node node) {
+        bstInsert(node);
+        Node helper;
 
-    public void rbInsert(Node k) {
-        bstInsert(k);
-//        if (k.parent.parent == null) return;
-        Node u;
-
-        while (k != root && k.parent.color == Color.RED) {
-            if (k.parent == k.parent.parent.right) {
-                u = k.parent.parent.left;
-                if (u.color == Color.RED) {
-                    u.color = Color.BLACK;
-                    k.parent.color = Color.BLACK;
-                    k.parent.parent.color = Color.RED;
-                    k = k.parent.parent;
+        while (node != root && node.parent.color == Color.RED) {
+            if (node.parent == node.parent.parent.right) {
+                helper = node.parent.parent.left;
+                if (helper.color == Color.RED) {
+                    helper.color = Color.BLACK;
+                    node.parent.color = Color.BLACK;
+                    node.parent.parent.color = Color.RED;
+                    node = node.parent.parent;
                 } else {
-                    if (k == k.parent.left) {
-                        k = k.parent;
-                        rotateRight(k);
+                    if (node == node.parent.left) {
+                        node = node.parent;
+                        rotateRight(node);
                     }
-                    k.parent.color = Color.BLACK;
-                    k.parent.parent.color = Color.RED;
-                    rotateLeft(k.parent.parent);
+                    node.parent.color = Color.BLACK;
+                    node.parent.parent.color = Color.RED;
+                    rotateLeft(node.parent.parent);
                 }
             } else {
-                u = k.parent.parent.right;
-                if (u.color == Color.RED) {
-                    u.color = Color.BLACK;
-                    k.parent.color = Color.BLACK;
-                    k.parent.parent.color = Color.RED;
-                    k = k.parent.parent;
+                helper = node.parent.parent.right;
+                if (helper.color == Color.RED) {
+                    helper.color = Color.BLACK;
+                    node.parent.color = Color.BLACK;
+                    node.parent.parent.color = Color.RED;
+                    node = node.parent.parent;
                 } else {
-                    if (k == k.parent.right) {
-                        k = k.parent;
-                        rotateLeft(k);
+                    if (node == node.parent.right) {
+                        node = node.parent;
+                        rotateLeft(node);
                     }
-                    k.parent.color = Color.BLACK;
-                    k.parent.parent.color = Color.RED;
-                    rotateRight(k.parent.parent);
+                    node.parent.color = Color.BLACK;
+                    node.parent.parent.color = Color.RED;
+                    rotateRight(node.parent.parent);
                 }
             }
         }
         root.color = Color.BLACK;
+    }
+
+    public int getMinDepth(Node node) {
+        if (node == null) return 0;
+
+        int leftDepth = getMinDepth(node.left);
+        int rightDepth = getMinDepth(node.right);
+
+        if (leftDepth < rightDepth) return (leftDepth+1);
+        else return (rightDepth+1);
+    }
+
+    public int getMaxDepth(Node node) {
+        if (node == null) return 0;
+
+        int leftDepth = getMaxDepth(node.left);
+        int rightDepth = getMaxDepth(node.right);
+
+        if (leftDepth > rightDepth) return (leftDepth+1);
+        else return (rightDepth+1);
+    }
+
+    public int getRedNodeCount(Node node) {
+        int count = 0;
+        if (node == null) return 0;
+
+        count += getRedNodeCount(node.left);
+        count += getRedNodeCount(node.right);
+
+        if (node.color == Color.RED) count++;
+
+        return count;
     }
 
     public void printTree() {
@@ -176,10 +159,19 @@ public class RedBlackTree {
         var nodes = List.of(38, 31, 22, 8, 20, 5, 10, 9, 21, 27, 29, 25, 28).stream()
                 .map(Node::new)
                 .collect(Collectors.toList());
+
         RedBlackTree tree = new RedBlackTree();
-        nodes.forEach(tree::rbInsert);
-//        tree.rotateLeft(tree.root);
-        tree.printTree();
+
+        nodes.forEach(node -> {
+            System.out.println("Inserting " + node.key);
+            tree.rbInsert(node);
+            tree.printTree();
+            System.out.println();
+        });
+
+        System.out.println("Red count: " + tree.getRedNodeCount(tree.root));
+        System.out.println("Min depth: " + tree.getMinDepth(tree.root));
+        System.out.println("Max depth: " + tree.getMaxDepth(tree.root));
     }
 
 }
