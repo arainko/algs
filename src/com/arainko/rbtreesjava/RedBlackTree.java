@@ -110,7 +110,7 @@ public class RedBlackTree {
     }
 
     public int getMinDepth(Node node) {
-        if (node == null) return 0;
+        if (node == warden) return 0;
 
         int leftDepth = getMinDepth(node.left);
         int rightDepth = getMinDepth(node.right);
@@ -120,7 +120,7 @@ public class RedBlackTree {
     }
 
     public int getMaxDepth(Node node) {
-        if (node == null) return 0;
+        if (node == warden) return 0;
 
         int leftDepth = getMaxDepth(node.left);
         int rightDepth = getMaxDepth(node.right);
@@ -131,7 +131,7 @@ public class RedBlackTree {
 
     public int getRedNodeCount(Node node) {
         int count = 0;
-        if (node == null) return 0;
+        if (node == warden) return 0;
 
         count += getRedNodeCount(node.left);
         count += getRedNodeCount(node.right);
