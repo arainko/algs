@@ -1,7 +1,5 @@
 package com.arainko.rbtreesjava;
 
-import com.arainko.quicksort.Utilities;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
