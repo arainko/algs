@@ -1,5 +1,8 @@
 package com.arainko.rbtreesjava;
 
+import com.arainko.quicksort.Utilities;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -110,28 +113,28 @@ public class RedBlackTree {
     }
 
     public int getMinDepth(Node node) {
-        if (node == warden) return 0;
+        if (node == null) return -1;
 
         int leftDepth = getMinDepth(node.left);
         int rightDepth = getMinDepth(node.right);
 
-        if (leftDepth < rightDepth) return (leftDepth+1);
-        else return (rightDepth+1);
+        if (leftDepth < rightDepth) return ++leftDepth;
+        else return ++rightDepth;
     }
 
     public int getMaxDepth(Node node) {
-        if (node == warden) return 0;
+        if (node == null) return -1;
 
         int leftDepth = getMaxDepth(node.left);
         int rightDepth = getMaxDepth(node.right);
 
-        if (leftDepth > rightDepth) return (leftDepth+1);
-        else return (rightDepth+1);
+        if (leftDepth > rightDepth) return ++leftDepth;
+        else return ++rightDepth;
     }
 
     public int getRedNodeCount(Node node) {
         int count = 0;
-        if (node == warden) return 0;
+        if (node == null) return 0;
 
         count += getRedNodeCount(node.left);
         count += getRedNodeCount(node.right);
@@ -156,22 +159,36 @@ public class RedBlackTree {
     }
 
     public static void main(String[] args) {
-        var nodes = List.of(38, 31, 22, 8, 20, 5, 10, 9, 21, 27, 29, 25, 28).stream()
+        var smallerTestSample = List.of(38, 31, 22, 8, 20, 5, 10, 9, 21, 27, 29, 25, 28).stream()
                 .map(Node::new)
                 .collect(Collectors.toList());
 
-        RedBlackTree tree = new RedBlackTree();
+        RedBlackTree smallerTree = new RedBlackTree();
 
-        nodes.forEach(node -> {
+        smallerTestSample.forEach(node -> {
             System.out.println("Inserting " + node.key);
-            tree.rbInsert(node);
-            tree.printTree();
+            smallerTree.rbInsert(node);
+            smallerTree.printTree();
             System.out.println();
         });
 
-        System.out.println("Red count: " + tree.getRedNodeCount(tree.root));
-        System.out.println("Min depth: " + tree.getMinDepth(tree.root));
-        System.out.println("Max depth: " + tree.getMaxDepth(tree.root));
+        System.out.println("SMALLER SAMPLE");
+        System.out.println("Red count: " + smallerTree.getRedNodeCount(smallerTree.root));
+        System.out.println("Min depth: " + smallerTree.getMinDepth(smallerTree.root));
+        System.out.println("Max depth: " + smallerTree.getMaxDepth(smallerTree.root));
+
+        var biggerTestSample = Arrays.stream(Utilities.generateAscendingArray(1000))
+                .mapToObj(Node::new)
+                .collect(Collectors.toList());
+
+        RedBlackTree biggerTree = new RedBlackTree();
+
+        biggerTestSample.forEach(biggerTree::rbInsert);
+
+        System.out.println("\nBIGGER SAMPLE");
+        System.out.println("Red count: " + biggerTree.getRedNodeCount(biggerTree.root));
+        System.out.println("Min depth: " + biggerTree.getMinDepth(biggerTree.root));
+        System.out.println("Max depth: " + biggerTree.getMaxDepth(biggerTree.root));
     }
 
 }

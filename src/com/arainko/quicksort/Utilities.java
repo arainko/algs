@@ -31,7 +31,7 @@ public class Utilities {
                     swap(array, i, j);
     }
 
-    static int[] generateRandomizedArray(int length) {
+    public static int[] generateRandomizedArray(int length) {
         int[] seq = new int[length];
         Random generator = new Random();
 
@@ -41,7 +41,7 @@ public class Utilities {
         return seq;
     }
 
-    static int[] generateAscendingArray(int length) {
+    public static int[] generateAscendingArray(int length) {
         int[] seq = new int[length];
         int j = 0;
 
