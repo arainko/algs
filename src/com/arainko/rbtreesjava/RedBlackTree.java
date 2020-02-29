@@ -154,7 +154,6 @@ public class RedBlackTree {
                     rotateRight(k.parent.parent);
                 }
             }
-            if (k == root) break;
         }
         root.color = Color.BLACK;
     }
@@ -174,7 +173,7 @@ public class RedBlackTree {
     }
 
     public static void main(String[] args) {
-        var nodes = List.of(38, 31, 22, 8, 20, 5, 10).stream()
+        var nodes = List.of(38, 31, 22, 8, 20, 5, 10, 9, 21, 27, 29, 25, 28).stream()
                 .map(Node::new)
                 .collect(Collectors.toList());
         RedBlackTree tree = new RedBlackTree();

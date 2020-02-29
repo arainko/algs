@@ -18,13 +18,13 @@ public class Node {
         String leftString;
         String rightString;
 
-        if (left.isWarden || left == null) leftString = "LEAF";
-            else leftString = left.key + "";
+        if (left.isWarden) leftString = "LEAF";
+            else leftString = left.key + " " + left.color.toString();
 
-        if (right.isWarden || right == null) rightString = "LEAF";
-            else rightString = right.key + "";
+        if (right.isWarden) rightString = "LEAF";
+            else rightString = right.key + " " + right.color.toString();
 
-        return "(" + leftString + ")" + " <- " + this.key + " -> " + "(" + rightString + ")";
+        return "(" + leftString + ")" + " <- " + this.key + " " + this.color.toString() + " -> " + "(" + rightString + ")";
     }
 
 }
