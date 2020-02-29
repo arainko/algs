@@ -7,6 +7,7 @@ public class Node {
     public Node right;
     public Color color = Color.BLACK;
     public int key;
+    public boolean isWarden = false;
 
     public Node(int key) {
         this.key = key;
@@ -17,12 +18,13 @@ public class Node {
         String leftString;
         String rightString;
 
-        if (left == null) leftString = "LEAF";
+        if (left.isWarden || left == null) leftString = "LEAF";
             else leftString = left.key + "";
 
-        if (right == null) rightString = "LEAF";
+        if (right.isWarden || right == null) rightString = "LEAF";
             else rightString = right.key + "";
 
         return "(" + leftString + ")" + " <- " + this.key + " -> " + "(" + rightString + ")";
     }
+
 }
