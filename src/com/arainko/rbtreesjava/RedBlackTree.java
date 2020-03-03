@@ -70,29 +70,29 @@ public class RedBlackTree {
 
     public void rbInsert(Node node) {
         bstInsert(node);
-        Node helper;
+        Node uncle;
 
         while (node != root && node.parent.color == Color.RED) {
             if (node.parent == node.parent.parent.right) {
-                helper = node.parent.parent.left;
-                if (helper.color == Color.RED) {
-                    helper.color = Color.BLACK;
+                uncle = node.parent.parent.left; // Left side Uncle
+                if (uncle.color == Color.RED) { // Uncle is RED -> Recolor F, GF, U
+                    uncle.color = Color.BLACK;
                     node.parent.color = Color.BLACK;
                     node.parent.parent.color = Color.RED;
                     node = node.parent.parent;
-                } else {
-                    if (node == node.parent.left) {
+                } else { // Uncle is BLACK ->
+                    if (node == node.parent.left) { // -> inserted node is a left child (TRIANGLE CASE) -> rotate Father
                         node = node.parent;
                         rotateRight(node);
                     }
-                    node.parent.color = Color.BLACK;
+                    node.parent.color = Color.BLACK; // -> (LINE CASE) -> rotate Grandfather and recolor F, GF
                     node.parent.parent.color = Color.RED;
                     rotateLeft(node.parent.parent);
                 }
             } else {
-                helper = node.parent.parent.right;
-                if (helper.color == Color.RED) {
-                    helper.color = Color.BLACK;
+                uncle = node.parent.parent.right; // Right side Uncle
+                if (uncle.color == Color.RED) {
+                    uncle.color = Color.BLACK;
                     node.parent.color = Color.BLACK;
                     node.parent.parent.color = Color.RED;
                     node = node.parent.parent;
@@ -107,7 +107,7 @@ public class RedBlackTree {
                 }
             }
         }
-        root.color = Color.BLACK;
+        root.color = Color.BLACK; // Basic case, if ROOT is RED recolor it
     }
 
     public int getMinDepth(Node node) {
