@@ -31,6 +31,8 @@ fun main() {
     huffmanTriples.forEach {
         println("Char: ${it.first}, Occurrences: ${it.second}, Code: ${it.third}")
     }
+    println("Approx. bit count of original text: ${fileText.length*4}")
+    println("Approx. bit count of encoded text: ${encodedText.length}")
 
 
 }
