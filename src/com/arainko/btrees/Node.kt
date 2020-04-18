@@ -1,10 +1,14 @@
 package com.arainko.btrees
 
-class Node(val degree: Int = 3) {
-    val keys: ArrayList<Int> = ArrayList(degree*2-1)
-    val children: ArrayList<Node> = ArrayList(degree*2-1)
+import java.io.Serializable
+
+data class Node(val degree: Int = 3): Serializable {
+    val keys = Array<Int?>(degree*2-1) { null }
+    val children = Array<Node?>(degree*2) { null }
+
     val isLeaf: Boolean
-        get() = children.isEmpty()
+        get() = children.filterNotNull().isNotEmpty()
+
     val keyCount: Int
         get() = keys.size
 }
