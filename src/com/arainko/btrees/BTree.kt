@@ -1,6 +1,5 @@
 package com.arainko.btrees
 
-import com.arainko.btrees.BTree.Companion.save
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.ObjectInputStream
@@ -26,38 +25,64 @@ fun <T> deserialize(filename: String): T {
     return output
 }
 
-class BTree {
+class BTree(val filename: String) {
     val root: Node? = null
+    var currentPosition: Int = 0
 
-    fun buildTree(g: Int, n: Int) {
+    init { PersistedTree().serialize(filename) }
 
+    val nodeCount: Int
+        get() = deserialize<PersistedTree>(filename).size
+
+    fun fetchAt(index: Int): Node = deserialize<PersistedTree>(filename)[index]
+    fun saveAt(position: Int, node: Node): Unit = deserialize<PersistedTree>(filename).run {
+        add(position, node)
+        serialize(filename)
     }
 
-    fun search(key: Int): Nothing = TODO()
+    fun build(height: Int, nodeCount: Int): Int {
+        var klucz: Int = 0
+        val w = Node().apply { keyCount = nodeCount }
+        if (height == 0) {
+            for (i in 0 until nodeCount) {
+                w.childrenPosition[i] = -1
+                w.keys[i] = klucz++
+            }
+            w.childrenPosition[nodeCount] = -1
+            w.isLeaf = true
+        } else {
+            for (i in 0 until nodeCount) {
+                w.childrenPosition[i] = build(height-1, nodeCount)
+                w.keys[i] = klucz++
+            }
+            w.childrenPosition[nodeCount] = build(height-1, nodeCount)
+            w.isLeaf = false
+        }
+        saveAt(currentPosition++, w)
+        return currentPosition-1
+    }
+
+    fun search(position: Int, key: Int): Node? {
+        val node = fetchAt(position)
+        var i = 0
+        while (i < node.keyCount && key > node.keys[i]) {
+            i++
+        }
+        return when (key) {
+            node.keys[i] -> node
+            else -> if (node.isLeaf) null else search(node.childrenPosition[i], key)
+        }
+    }
     fun insert(key: Int): Nothing = TODO()
     fun delete(key: Int): Nothing = TODO()
 
-    companion object {
-        private const val BTREE = "serializedBTree"
 
-        init { PersistedTree().serialize(BTREE) }
-
-        val nodeCount: Int
-            get() = deserialize<PersistedTree>(BTREE).size
-
-        fun fetchAt(index: Int): Node = deserialize<PersistedTree>(BTREE)[index]
-        fun Node.save(): Unit = deserialize<PersistedTree>(BTREE).run {
-            add(this@save)
-            serialize(BTREE)
-        }
-
-    }
 }
 
 fun main() {
-    val node = Node(5)
-    node.serialize("serializedNode")
-    node.save()
-    val deserialized = deserialize<Node>("serializedNode")
-    println(deserialized)
+    val tree = BTree("serializedTree")
+    tree.build(3, 0)
+
+    println(deserialize<PersistedTree>("serializedTree"))
+
 }
