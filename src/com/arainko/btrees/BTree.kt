@@ -5,7 +5,7 @@ import java.io.FileOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 
-typealias PersistedTree = ArrayList<Node>
+//typealias PersistedTree = ArrayList<com.arainko.btrees.Node>
 
 fun <T> T.serialize(filename: String) {
     val file = FileOutputStream(filename)
@@ -25,64 +25,54 @@ fun <T> deserialize(filename: String): T {
     return output
 }
 
-class BTree(val filename: String) {
-    val root: Node? = null
-    var currentPosition: Int = 0
+class BTree(private val degree: Int) {
+    var root: Node? = null
 
-    init { PersistedTree().serialize(filename) }
+    private val maxKeyCount: Int
+        get() = 2*degree-1
 
-    val nodeCount: Int
-        get() = deserialize<PersistedTree>(filename).size
+    private val maxChildrenCount: Int
+        get() = 2*degree
 
-    fun fetchAt(index: Int): Node = deserialize<PersistedTree>(filename)[index]
-    fun saveAt(position: Int, node: Node): Unit = deserialize<PersistedTree>(filename).run {
-        add(position, node)
-        serialize(filename)
+    fun print() {
+        if (root != null) root!!.print()
+        println()
     }
 
-    fun build(height: Int, nodeCount: Int): Int {
-        var klucz: Int = 0
-        val w = Node().apply { keyCount = nodeCount }
-        if (height == 0) {
-            for (i in 0 until nodeCount) {
-                w.childrenPosition[i] = -1
-                w.keys[i] = klucz++
+    fun search(key: Int): Node? =
+            if (root == null) null else root!!.search(key)
+
+    fun insert(key: Int) = if (root == null) {
+        root = Node(true)
+        root!!.keys[0] = key
+        root!!.keyCount = 1
+    } else {
+        if (root!!.keyCount == maxKeyCount) {
+            val newNode = Node(false)
+            newNode.children[0] = root
+            newNode.splitChild(0, root)
+            var i = 0
+            if (newNode.keys[0] < key) {
+                i++
             }
-            w.childrenPosition[nodeCount] = -1
-            w.isLeaf = true
-        } else {
-            for (i in 0 until nodeCount) {
-                w.childrenPosition[i] = build(height-1, nodeCount)
-                w.keys[i] = klucz++
-            }
-            w.childrenPosition[nodeCount] = build(height-1, nodeCount)
-            w.isLeaf = false
-        }
-        saveAt(currentPosition++, w)
-        return currentPosition-1
+            newNode.children[i]!!.insertNonFull(key)
+            root = newNode
+        } else root!!.insertNonFull(key)
     }
-
-    fun search(position: Int, key: Int): Node? {
-        val node = fetchAt(position)
-        var i = 0
-        while (i < node.keyCount && key > node.keys[i]) {
-            i++
-        }
-        return when (key) {
-            node.keys[i] -> node
-            else -> if (node.isLeaf) null else search(node.childrenPosition[i], key)
-        }
-    }
-    fun insert(key: Int): Nothing = TODO()
-    fun delete(key: Int): Nothing = TODO()
-
 
 }
 
 fun main() {
-    val tree = BTree("serializedTree")
-    tree.build(3, 0)
+    val tree = BTree(3)
 
-    println(deserialize<PersistedTree>("serializedTree"))
+    listOf(2, 43, 51, 22, 11, 4, 54, 23, 43, 30).forEach { tree.insert(it) }
+
+    tree.root!! { println("Root: ${}") }
+    tree.root!!.children.forEachIndexed { index, node ->
+        println("Child $index: ${node?.keys?.fold("") { acc, key -> "$acc $key" }}, keyCount: ${node?.keyCount} ")
+    }
+
+    println(tree.search(51))
+    println(tree.search(101))
 
 }
