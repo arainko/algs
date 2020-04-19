@@ -65,14 +65,27 @@ class BTree(private val degree: Int) {
 fun main() {
     val tree = BTree(3)
 
-    listOf(2, 43, 51, 22, 11, 4, 54, 23, 43, 30).forEach { tree.insert(it) }
-
-    tree.root!! { println("Root: ${}") }
-    tree.root!!.children.forEachIndexed { index, node ->
-        println("Child $index: ${node?.keys?.fold("") { acc, key -> "$acc $key" }}, keyCount: ${node?.keyCount} ")
+    listOf(2, 43, 51, 22, 11, 4, 54, 23, 43, 30).forEach {
+        println("Inserting $it")
+        tree.insert(it)
+        println("Root: ${tree.root!!.keys.take(tree.root!!.keyCount)}, keyCount: ${tree.root!!.keyCount} ")
+        tree.root!!.children.forEachIndexed { index, node ->
+            println("Child $index: ${node?.keys?.take(node.keyCount)}, keyCount: ${node?.keyCount} ")
+        }
+        println()
     }
 
+//    tree.root!! { println("Root: ${}") }
+//    println("Root: ${tree.root!!.keys.take(tree.root!!.keyCount)}, keyCount: ${tree.root!!.keyCount} ")
+//    tree.root!!.children.forEachIndexed { index, node ->
+//        println("Child $index: ${node?.keys?.take(node.keyCount)}, keyCount: ${node?.keyCount} ")
+//    }
+
+    println()
+    println("Sukanie 51: ")
     println(tree.search(51))
+    println()
+    println("Sukanie 101: ")
     println(tree.search(101))
 
 }
