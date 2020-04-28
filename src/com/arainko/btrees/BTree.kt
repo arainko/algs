@@ -75,12 +75,6 @@ fun main() {
         println()
     }
 
-//    tree.root!! { println("Root: ${}") }
-//    println("Root: ${tree.root!!.keys.take(tree.root!!.keyCount)}, keyCount: ${tree.root!!.keyCount} ")
-//    tree.root!!.children.forEachIndexed { index, node ->
-//        println("Child $index: ${node?.keys?.take(node.keyCount)}, keyCount: ${node?.keyCount} ")
-//    }
-
     println()
     println("Sukanie 51: ")
     println(tree.search(51))
