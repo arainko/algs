@@ -137,6 +137,7 @@ fun main() {
 
 /*
     FOR wzorzec.txt and tekst.txt
+
     Found match at line 4, position 20
     Found match at line 332, position 0
     Found match at line 1212, position 28
@@ -170,6 +171,7 @@ fun main() {
 
 /*
     FOR wzorzec1.txt and tekst1.txt
+
     Found match at line 21, position 9
     Found match at line 61, position 9
     Found match at line 101, position 9
